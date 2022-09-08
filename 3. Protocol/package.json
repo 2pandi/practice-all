@@ -1,0 +1,17 @@
+{
+  "name": "3.-protocol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "https.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon https.js",
+    "start-e": "nodemon https-express.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19"
+  }
+}
