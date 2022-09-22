@@ -1,6 +1,6 @@
 import React from "react";
 
-function Auth () {
+export const Auth = () => {
     return (
         <span>Auth</span>
     );

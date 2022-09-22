@@ -1,6 +1,6 @@
 import React from "react";
 
-function EditProfile () {
+export const EditProfile = () => {
     return (
         <span>EditProfile</span>
     );

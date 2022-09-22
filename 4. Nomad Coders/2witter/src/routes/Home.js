@@ -1,6 +1,6 @@
 import React from "react";
 
-function Home () {
+export const Home = () => {
     return (
         <span>Home</span>
     );
