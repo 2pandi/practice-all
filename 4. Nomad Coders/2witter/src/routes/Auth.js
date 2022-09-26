@@ -1,8 +1,12 @@
+import { authService, createUserWithEmailAndPasswordFbase, signInWithEmailAndPasswordFbase } from "fbase";
 import React, { useState } from "react";
 
 export const Auth = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [newAccount, setNewAccount] = useState(true);
+    const [error, setError] = useState("");
+
     const onChange = (e) => {
       const { name, value } = e.target;
       if (name === "email") {
@@ -11,9 +15,31 @@ export const Auth = () => {
         setPassword(value);
       }
     };
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
       e.preventDefault();
+      try {
+        let data;
+        if (newAccount) {
+          data = await createUserWithEmailAndPasswordFbase(
+            authService,
+            email,
+            password
+          );
+        } else {
+          data = await signInWithEmailAndPasswordFbase(
+            authService,
+            email,
+            password
+          );
+        }
+        console.log(data);
+      }
+      catch (error) {
+        setError(error.message);
+      }
     };
+
+    const toggleAccount = () => setNewAccount((prev) => !prev)
 
     /**
      * const [form, setForm] = useState({email: "", password: ""});
@@ -39,8 +65,10 @@ export const Auth = () => {
             value={password}
             onChange={onChange}
           />
-          <input type="submit" value="Log in"/>
+          <input type="submit" value={newAccount ? "Create Account" : "Log In"} />
+          {error}
         </form>
+        <span onClick={toggleAccount}>{newAccount ? "Sign in" : "Create Account"}</span>
         <div>
           <button>Countinue with Google</button>
           <button>Countinue with Github</button>
