@@ -1,0 +1,1 @@
+(()=>{var t={942:t=>{const r={once(t){let r,e=!1;return function(...o){return e||(e=!0,r=t(...o)),r}}};t.exports=r}},r={};function e(o){var n=r[o];if(void 0!==n)return n.exports;var s=r[o]={exports:{}};return t[o](s,s.exports,e),s.exports}(()=>{const t="Aliqua esse voluptate pariatur incididunt sunt eiusmod.",r=e(942).once(((...t)=>console.log(...t)));r(t),r(t),r(t),r(t)})()})();
