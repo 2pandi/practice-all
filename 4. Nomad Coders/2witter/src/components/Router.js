@@ -15,8 +15,8 @@ function AppRouter ({isLoggedIn}) {
               <Route exact path="/">
                 <Home />
               </Route>
-              <Route exact path="/profile">
-                <Profile />
+              <Route exact path="/profile" >
+                <Profile isLoggedIn={isLoggedIn} />
               </Route>
             </>
           ) : (
