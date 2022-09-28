@@ -1,39 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { dbService, authService } from "fbase";
-import { addDoc, getDocs, collection } from "firebase/firestore";
+import { dbService } from "fbase";
+import { addDoc, collection, onSnapshot, query, orderBy } from "firebase/firestore";
 
-export const Home = () => {
+export const Home = ({userObj}) => {
     const [twoweet, setTwoweet] = useState('');
     const [twoweets, setTwoweets] = useState([]);
-    
-    const get2weets = async () => {
-        const db2weets = await getDocs(collection(dbService, "twoweets"));
-        db2weets.forEach(doc => {
-            const twoweetObject = {
-                ...doc.data(),
-                id: doc.id,
-            };
-            setTwoweets(prev => [twoweetObject, ...prev]);
-        })
-    };
 
     useEffect(() => {
-        get2weets();
+        const q = query(collection(dbService, "twoweets"), orderBy("createdAt","desc"));
+        onSnapshot(q, (snapshot) => {
+            const twoweetArr = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setTwoweets(twoweetArr);
+        });
     }, [])
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        const userEmail = authService.currentUser.email;
         await addDoc(collection(dbService, "twoweets"), {
-            userEmail,
+            userEmail: userObj.email,
             twoweet,
             createdAt: new Date().toLocaleString()
         });
+        setTwoweet('');
     };
 
     const onChange = (e) => {
         setTwoweet(e.target.value); 
     };
+
     return (
         <>
             <form onSubmit={onSubmit}>
